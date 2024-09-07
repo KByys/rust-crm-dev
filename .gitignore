@@ -1,0 +1,12 @@
+target
+/Cargo.lock
+/upload
+/product
+/order
+/tmp
+/.idea
+/.vscode
+/config/config.json
+/resources
+/data
+/examples
