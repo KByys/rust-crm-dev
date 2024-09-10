@@ -161,7 +161,7 @@ impl CustomFields {
 pub async fn insert_custom_field(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
         let db = get_db().await?;
     let mut conn = db.lock().await;
-    let id = verify_perm(headers, &mut conn).await?;
+    let _id = verify_perm(headers, &mut conn).await?;
     let data: CustomInfos = serde_json::from_value(value)?;
     if data.ty > 1 {
         return Err(Response::invalid_value("ty 大于 1"));
@@ -219,7 +219,7 @@ fn _insert_field(conn: &mut PooledConn, param: &CustomInfos) -> Result<(), Respo
 pub async fn insert_box_option(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
         let db = get_db().await?;
     let mut conn = db.lock().await;
-    let id = verify_perm(headers, &mut conn).await?;
+    let _id = verify_perm(headers, &mut conn).await?;
     let data: CustomInfos = serde_json::from_value(value)?;
     if data.ty > 1 {
         return Err(Response::invalid_value("ty 大于 1"));
@@ -248,7 +248,7 @@ pub async fn insert_box_option(headers: HeaderMap, Json(value): Json<Value>) -> 
 pub async fn update_custom_field(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
         let db = get_db().await?;
     let mut conn = db.lock().await;
-    let id = verify_perm(headers, &mut conn).await?;
+    let _id = verify_perm(headers, &mut conn).await?;
     let data: CustomInfos = serde_json::from_value(value)?;
     if !matches!(data.display.as_str(), "0" | "1" | "2") {
         return Err(Response::invalid_value(format!(
@@ -303,7 +303,7 @@ fn _update_custom_field(conn: &mut PooledConn, param: &CustomInfos) -> Result<()
 pub async fn update_box_option(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
         let db = get_db().await?;
     let mut conn = db.lock().await;
-    let id = verify_perm(headers, &mut conn).await?;
+    let _id = verify_perm(headers, &mut conn).await?;
 
     let data: CustomInfos = serde_json::from_value(value)?;
     if data.new_value.is_empty() {
@@ -324,7 +324,7 @@ pub async fn update_box_option(headers: HeaderMap, Json(value): Json<Value>) -> 
 pub async fn delete_custom_field(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
         let db = get_db().await?;
     let mut conn = db.lock().await;
-    let id = verify_perm(headers, &mut conn).await?;
+    let _id = verify_perm(headers, &mut conn).await?;
     let data: CustomInfos = serde_json::from_value(value)?;
     if data.ty > 1 {
         return Err(Response::invalid_value("ty 大于 1"));
@@ -367,7 +367,7 @@ fn _delete_custom_field(conn: &mut PooledConn, param: &CustomInfos) -> Result<()
 pub async fn delete_box_option(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
     let db = get_db().await?;
     let mut conn = db.lock().await;
-    let id = verify_perm(headers, &mut conn).await?;
+    verify_perm(headers, &mut conn).await?;
     let data: CustomInfos = serde_json::from_value(value)?;
     // let table = CUSTOM_BOX_FIELDS[data.ty];
     conn.query_drop(format!(

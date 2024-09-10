@@ -4,7 +4,7 @@ use mysql_common::prelude::FromRow;
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
 
-use crate::{bearer, commit_or_rollback, database::get_db, libs::{gen_id, TIME}, log, mysql_stmt, pages::{account::get_user, func::supper}, parse_jwt_macro, Response, ResponseResult};
+use crate::{bearer, commit_or_rollback, database::get_db, libs::{gen_id, TIME}, log, mysql_stmt, pages::account::get_user, parse_jwt_macro, Response, ResponseResult};
 
 
 pub fn router() -> Router {
@@ -163,7 +163,7 @@ struct QueryResponse {
     records: Vec<Supper>
 }
 
-async fn query_supper(header: HeaderMap, Json(param): Json<Value>) -> ResponseResult {
+async fn query_supper(_header: HeaderMap, Json(param): Json<Value>) -> ResponseResult {
     let db = get_db().await?;
     let mut conn = db.lock().await;
     let param: QueryParam = serde_json::from_value(param)?;
@@ -186,7 +186,7 @@ async fn query_supper(header: HeaderMap, Json(param): Json<Value>) -> ResponseRe
     
 }
 
-fn match_keyword(src: &[&str], key: &str) -> bool {
+fn match_keyword(_src: &[&str], key: &str) -> bool {
     if key.is_empty() {
         return true;
     }

@@ -88,7 +88,7 @@ macro_rules! parse_option {
 }
 
 pub async fn insert_options(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
-    let (id, mut conn, info) = parse_option!(headers, value, false);
+    let (_, mut conn, info) = parse_option!(headers, value, false);
     let time = TIME::now()?;
     if info.info.value.is_empty() {
         return Err(Response::invalid_value("value不能为空字符串"));
@@ -263,7 +263,7 @@ fn split_level(level: &str) -> Level {
 }
 
 pub async fn update_option_value(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
-    let (id, mut conn, info) = parse_option!(headers, value, true);
+    let (_, mut conn, info) = parse_option!(headers, value, true);
     // conn.query_drop(Database::SET_FOREIGN_KEY_0)?;
     commit_or_rollback!(_update, &mut conn, &info)?;
 
@@ -328,7 +328,7 @@ fn update_storehouse(conn: &mut PooledConn, old: &str, new: &str) -> mysql::Resu
 }
 
 pub async fn delete_option_value(headers: HeaderMap, Json(value): Json<Value>) -> ResponseResult {
-    let (id, mut conn, info) = parse_option!(headers, value, true);
+    let (_, mut conn, info) = parse_option!(headers, value, true);
     let name = *get_drop_down_box!(info.ty);
     if name.eq("department") {
         if info.info.delete_value.eq("总经办") {

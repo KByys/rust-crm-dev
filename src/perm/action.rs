@@ -8,7 +8,6 @@ pub(super) fn groups() -> HashMap<&'static str, Vec<&'static str>> {
         (StorehouseGroup::NAME, STOREHOUSE.to_vec()),
         (FinanceGroup::NAME, FINANCE.to_vec()),
         (PurchaseGroup::NAME, PURCHASE.to_vec()),
-        // ("form", FORM.to_vec()),
         (OtherGroup::NAME, OTHER_GROUP.to_vec()),
     ]
     .into_iter()

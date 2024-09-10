@@ -22,21 +22,6 @@ impl From<String> for Person {
         }
     }
 }
-// impl FromValue for Person {
-//     type Intermediate = String;
-// }
-// impl<'de> serde::Deserialize<'de> for Person {
-//     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-//     where
-//         D: serde::Deserializer<'de>,
-//     {
-//         let id: String = serde::Deserialize::deserialize(deserializer)?;
-//         Ok(Person {
-//             id,
-//             name: String::new(),
-//         })
-//     }
-// }
 pub fn empty_deserialize_to_none<'de, D, T: From<String>>(de: D) -> Result<Option<T>, D::Error>
 where
     D: Deserializer<'de>,

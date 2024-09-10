@@ -11,7 +11,7 @@ use mysql_common::prelude::FromRow;
 use serde_json::{json, Value};
 
 mod login;
-mod logout;
+// mod logout;
 mod register;
 use crate::{
     bearer,
